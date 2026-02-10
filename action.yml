@@ -36,9 +36,6 @@ runs:
         CELL_SOURCE="${{ inputs.cell_source }}"
         PATTERN="${{ inputs.file_pattern }}"
 
-        # Configure Python
-        pip install nbformat
-
         # Find relevant files
         # Avoid .git to keep the index safe
         find . -name "$PATTERN" -not -path "./.git/*" -type f | while read -r file; do
@@ -46,8 +43,6 @@ runs:
           echo "Processing $file..."
           
           # Run Python script
-          python script.py
-
-          echo $STATUS
+          python script.py "$file"
 
         done

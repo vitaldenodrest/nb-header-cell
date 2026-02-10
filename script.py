@@ -1,26 +1,31 @@
 import os
+import sys
 import nbformat
 
 
-# Get env variables
-env_vars = os.environ
+def update_notebook():
+    # Get bash arguments
+    file_path = sys.argv[1]
+    cell_source = os.environ.get('CELL_SOURCE', '')
 
-# Open notebook
-notebook = nbformat.read(env_vars['file'])
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            notebook = nbformat.read(f, as_version=4)
 
-# Get current header cell
-current_header_cell = notebook['cells'][0]
+        # Check whether nb has cells
+        if len(notebook['cells']) > 0 and notebook['cells'][0]['source'] == cell_source:
+            print(f"Skipping {file_path}: Header already present.")
+        else:
+            header_cell = nbformat.v4.new_markdown_cell(source=cell_source)
+            notebook['cells'].insert(0, header_cell)
+            
+            with open(file_path, 'w', encoding='utf-8') as f:
+                nbformat.write(notebook, f)
+            print(f"Success: Header inserted in {file_path}.")
+            
+    except Exception as e:
+        print(f"Error processing {file_path}: {e}")
+        sys.exit(1)
 
-# Process header
-if current_header_cell['source'] == env_vars['CELL_SOURCE']:
-    status = 'Header cell already present.'
-else:
-    header_cell = nbformat.v4.new_markdown_cell(source=env_vars['CELL_SOURCE'])
-    notebook['cells'].insert(0, header_cell)
-    status = 'Header cell insterted.'
-
-# Save notebook
-nbformat.write(notebook, env_vars['file'])
-
-# Write status as env var
-os.environ['STATUS'] = status
+if __name__ == "__main__":
+    update_notebook()
