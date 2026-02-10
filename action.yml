@@ -34,7 +34,7 @@ runs:
       run: |
         # Declare action parameters as env variables
         CELL_SOURCE="${{ inputs.cell_source }}"
-        FILE_PATTERN="${{ inputs.file_pattern }}"
+        PATTERN="${{ inputs.file_pattern }}"
 
         # Configure Python
         pip install nbformat
