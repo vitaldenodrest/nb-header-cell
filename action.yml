@@ -26,7 +26,7 @@ runs:
 
     - name: Install packages
       shell: bash
-      run: pip install -r req
+      run: pip install nbformat
 
     - name: Prepend Header
       shell: bash
