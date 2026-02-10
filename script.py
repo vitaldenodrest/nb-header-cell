@@ -6,7 +6,7 @@ import nbformat
 def update_notebook():
     # Get bash arguments
     file_path = sys.argv[1]
-    cell_source = os.environ.get('CELL_SOURCE', '')
+    cell_source = sys.argv[2]
 
     try:
         with open(file_path, 'r', encoding='utf-8') as f:

@@ -43,6 +43,6 @@ runs:
           echo "Processing $file..."
           
           # Run Python script
-          python script.py "$file"
+          python script.py "$file" "$CELL_SOURCE"
 
         done
