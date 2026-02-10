@@ -4,7 +4,7 @@ author: 'Vital de Nodrest (@vitaldenodrest)'
 
 branding:
   icon: 'book-open'
-  color: 'white'
+  color: 'orange'
 
 inputs:
   cell_source:

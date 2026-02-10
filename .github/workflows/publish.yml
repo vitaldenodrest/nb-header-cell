@@ -1,0 +1,19 @@
+name: Publish Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  update-major-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Update Major Tag
+        uses: ncipollo/release-action@v1
+        with:
+          tag: v1
+          allowUpdates: true
+          removeArtifacts: true
