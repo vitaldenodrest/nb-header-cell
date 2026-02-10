@@ -4,7 +4,7 @@ Inserting a cell at the beginning of Jupyter notebooks.
 
 ## Usage
 ```yaml
-- uses: vitaldenodrest/nb-header-cell@v1
+- uses: vitaldenodrest/nb-header-cell@v1.0.3
   with:
     # Cell source content. Note that this is a markdown cell
     # Required.
