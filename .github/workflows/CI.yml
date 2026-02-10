@@ -1,0 +1,17 @@
+name: CI test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test-action:
+    runs-on: ubuntu-latest
+    steps:
+      
+        - uses: actions/checkout@v6
+
+        - name: Run local action
+          uses: ./
+          with:
+            cell_source: 'This is an **automatic** header'

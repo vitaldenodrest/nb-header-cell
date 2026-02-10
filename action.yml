@@ -1,5 +1,5 @@
 name: 'Add Notebook Header'
-description: 'Add a header cell (e.g. copyright) at the beginning of Jupyter noteooks if not already present anywhere in the notebook.'
+description: 'Add a header cell (e.g. copyright) at the beginning of Jupyter noteooks if not present already.'
 author: 'Vital de Nodrest (@vitaldenodrest)'
 
 branding:
@@ -10,14 +10,6 @@ inputs:
   cell_source:
     description: "The cell contents"
     required: true
-  cell_metadata:
-    description: "Cell metadata"
-    required: false
-    default: ''
-  cell_type:
-    description: "The cell type (default: 'markdown')"
-    required: false
-    default: 'markdown'
   file_pattern:
     description: "The files to target (default: '*.ipynb')"
     required: false
@@ -26,14 +18,36 @@ inputs:
 runs:
   using: 'composite'
   steps:
+
+    - name: Configure Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: '3.11'
+
+    - name: Install packages
+      shell: bash
+      run: pip install -r req
+
     - name: Prepend Header
       shell: bash
+
       run: |
+        # Declare action parameters as env variables
         CELL_SOURCE="${{ inputs.cell_source }}"
-        CELL_METADATA="${{ inputs.cell_metadata }}"
-        CELL_TYPE="${{ inputs.cell_type }}"
         FILE_PATTERN="${{ inputs.file_pattern }}"
+
+        # Configure Python
+        pip install nbformat
 
         # Find relevant files
         # Avoid .git to keep the index safe
         find . -name "$PATTERN" -not -path "./.git/*" -type f | while read -r file; do
+
+          echo "Processing $file..."
+          
+          # Run Python script
+          python script.py
+
+          echo $STATUS
+
+        done
