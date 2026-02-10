@@ -15,3 +15,9 @@ jobs:
           uses: ./
           with:
             cell_source: 'This is an **automatic** header'
+
+        - name: Upload results as artefacts
+          uses: actions/upload-artifact
+          with:
+            name: notebooks
+            path: '**/*.ipynb'
